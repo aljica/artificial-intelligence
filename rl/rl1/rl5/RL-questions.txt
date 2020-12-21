@@ -1,0 +1,10 @@
+what is the random seed generated?: the seed determines the
+distribution of np.random() values for the q-values and when
+generating r to compare with epsilon.
+
+also, i get 24 points on assignment 5 and all i had to do was adjust alpha,
+gamma and the threshold. in the lab spec they talk about keeping track of
+highest return R, annealing alpha etc etc but i didnt have to do any of that.
+ to get an A, how deep does my knowledge actually need to be?:
+ you are supposed to do more than just that apparently,
+ so post this on canvas...

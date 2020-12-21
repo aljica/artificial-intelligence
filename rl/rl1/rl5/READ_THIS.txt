@@ -1,0 +1,30 @@
+I chose alpha=0.7 and gamma=0.5, along with eps_final=0.2 and
+annealing_timesteps=1000, similar to the values from previous
+assignments.
+
+The main thing I had to change was the threshold. Could be that because
+alpha is closer to 1 (faster learning), we need more iterations
+to converge.
+
+Using threshold=1e-6 made us converge way too soon, which sometimes
+led us to choosing a sub-optimal policy which for the lab test case
+yielded a reward of less than 11 (9 was most notable alongside
+11 - so 11 was reached sometimes, but not consistently).
+
+By adjusting the threshold lower, to 1e-8, we got the desired reward
+consistently and passed all kattis test cases.
+
+Also, in the lab specification, we are advised to keep track
+of the highest reward R for the last N episodes. This does NOT work
+if the threshold is too low (1e-6), because when we did that,
+the highest reward ended up being 9 sometimes and so then that
+was chosen as the optimal policy, when in fact it is
+sub-optimal. Annealing alpha was not necessary.
+
+## VERY IMPORTANT BELOW: ##
+BUT here's the thing: IF we choose a slow learning rate (alpha closer to 0),
+then we can get away with having a threshold of 1e-6. The problem is that
+this is not the most efficient way of finding the optimal policy,
+so the correct way is to have a relatively high value of alpha, i.e. faster
+learning, but then to compensate for potential early convergence, we simply
+lower the threshold to 1e-8.

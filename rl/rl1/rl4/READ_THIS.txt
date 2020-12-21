@@ -1,0 +1,49 @@
+4.1
+
+Not improving/learning: alpha = 0 (gamma doesn't matter, just look
+at bellman equation - it becomes irrelevant)
+High variance but fast learning: alpha = 1/close to 1 (gamma unspecified?)
+Low variance and high long-term return: a close to 0, gamma
+close to 1
+High var, high return: a close to 1, gamma close to 1
+----------
+4.2
+
+-------
+However, if the reward structure of an MDP is simple enough, the optimal policy
+degenerates in a simple heuristic. Given the 4_2_3.yml reward
+structure and initial position of jelly fish/king fish/diver,
+what is the value of the long term return of the optimal policy?
+[do they want me to run it and find out what the return is,
+or do they want me to theoretically answer the question?]:
+
+Seeing as staying alive has score -2 and catching jelly fish has -10,
+we would never want to catch jelly fish but always want to catch the king
+fish of course. The long term return of the optimal policy is then
+the score for catching the king fish minus the total negative reward
+incurred from taking the SHORTEST path to the king fish. In some other
+instance, where let's say the negative reward of staying alive is
+equal to catching jelly fish, the optimal policy might actually
+consist of catching jelly fish just to optimize the diver's route
+to the king fish (by taking the shortest route).
+--------
+4.2 Never catch any fish)
+eps_final=-annealing_timesteps so that epsilon is always 0, i.e.
+we always choose the action with the highest q-value.
+
+Additionally, the reward structure is set so that all fish have negative
+rewards and staying alive has the highest reward. This will
+result in us making a move at the beginning, updating the value of
+just staying alive, and then going to another position
+where we're just staying alive, because that has the highest reward.
+King fish has reward 1 but that's so low compared to just staying alive,
+which means we'll always choose just staying alive over catching the king.
+--------------------------------------------
+4.2 Shortest path to King Fish)
+Have an equally negative reward for all jelly fish and simply staying alive,
+and a very high reward for catching the King Fish. This way, the reward
+of staying alive and catching jelly fish will be the exact same, so
+the diver won't care if he happens to pick up jelly fish so long as
+it shortens his path to the King Fish. Similarly, we set
+eps_final=-annealing_timesteps so we're always choosing the action
+with the highest q-value.

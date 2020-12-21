@@ -1,0 +1,17 @@
+Q1) Possible states: the combination of unique hook & fish positions along with fish & player scores
+
+Possible initial states: Player scores are always 0, fish scores can change and initial state also consists of starting hook & fish positions.
+
+Transition function: Given a state and an action, the transition function returns the next state (note that this is different from u in that u gives you the set of all possible states from any given state - in other words, u is compute_and_get_children(), whereas transition function is compute_next_state()).
+
+Q2) When all fish are caught or time runs out.
+
+Q3) Because A can maximize it and B can minimize it. It also accurately describes who's winning, in that the primary objective of the game is to maximize the score of each player.
+
+Q4) It approximates the utility function best when the only purpose of the game is to gain as high a score as possible by catching the most/the most valuable fish (which means, if only we can explore the game tree deep enough, we'd be able to find the correct move NOW which ultimately gives us a higher score many moves down the line - we should preferably be able to reach deep enough to where the game would be in a terminal state AND our score would be maximized).
+
+In chess, on the other hand, the point is not to deplete your opponent of valuable pieces, but rather to check-mate the opposing king, so in that case applying a heuristic function solely based on numeric values of the pieces is far from adequate to approximate a utility function.
+
+Q5) One example is where there's a fish worth many points right next to B, which when caught, propels B's score higher than that of A's current score. 
+
+Q6) The problem is that we don't know how our opponent will act, because n doesn't take that into consideration. So we will include winning states that are very unlikely (such as us catching a final 10 point fish that's 10 steps away from us but only 2 steps away from our opponent), in that way n will suffer from a similar problem as v - i.e. over-valuing our current position in the state based on not (being able to?) taking our opponent's actions into consideration.

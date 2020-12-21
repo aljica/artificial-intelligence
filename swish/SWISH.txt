@@ -1,0 +1,112 @@
+%%  friends(-Solution)
+%   @param  Solution is a list of friends that satisfy all constraints.
+
+/* 4 friends logical puzzle: 
+* 
+* The constants:
+* Friends: p1, p2, p3, p4
+* Vehicle: bike, car, lorry, bus
+* Licenses: a,b,c,d -- note that we use lowercase letters as uppercase letters are reserved for variables
+* Housing: house, apartment
+* Holidays: beach, country, mountains
+* 
+* We define that:
+*  Two people are neighbours if they live in the same type of housing.
+* 
+* And we know the following facts:
+*  F1- p1 lives in a house;
+*  F2- p4 has license C;
+*  F3- p3 has license A;
+*  F4- The person with license A goes to the beach;
+*  F5- The bus driver goes to the mountains;
+*  F6- The bike driver has license A, the car driver has license B, the lorry driver has license C, and the bus driver has license D;
+*  F7- The person who has license B lives in a house and goes to the beach;
+*  F8- The lorry driver does not live in a house and spends the holidays in the country;
+*  F9- p2 and p4 are neighbors;
+*  F10- The person who drives a motorcycle is a neighbour of p2, but not of p1;
+*  F11- A neighbour of p3 has license C;
+*/
+
+% Render the houses term as a nice table.
+:- use_rendering(table,[header(p('Person', 'Vehicle', 'License', 'Housing', 'Holidays'))]).
+
+
+%Two people are neighbours if they live in the same type of housing.
+neighbours(P1, P2, Ls) :-				
+    member(p(P1, _, _, X, _),Ls),
+    member(p(P2, _, _, Y, _),Ls),
+    not(P1 == P2),
+    X = Y.
+
+% The facts:
+fact1(Ls) :- 
+    member(p(p1,_,_,house,_), Ls).
+fact2(Ls) :- 
+    member(p(p4,_,c,_,_), Ls).
+%   fill here
+fact3(Ls) :- 
+    member(p(p3,_,a,_,_), Ls).
+%   fill here
+fact4(Ls) :-
+    member(p(_, _, a, _, beach), Ls).
+fact5(Ls) :-
+    member(p(_,bus,_,_,mountains), Ls).
+%   fill here
+fact6(Ls) :-
+    member(p(_,bike,a,_,_), Ls),
+	member(p(_,car,b,_,_), Ls),
+	member(p(_,lorry,c,_,_), Ls),
+	member(p(_,bus,d,_,_), Ls).
+%   fill here
+fact7(Ls) :-
+    member(p(_,_,b,house, beach), Ls).
+%   fill here
+fact8(Ls) :-
+    member(p(_, lorry, _, X, Y),Ls),
+    not(X == house),
+    Y = country.
+fact9(Ls) :- 
+    member(p(p2, _, _, X, _),Ls),
+    member(p(p4, _, _, Y, _),Ls),
+    not(p2 == p4),
+    X = Y.
+%   fill here
+fact10(Ls) :-
+    member(p(P,bike,_,X,_), Ls),
+	member(p(p2,_,_,Y,_), Ls),
+	member(p(p1,_,_,Z,_), Ls),
+	not(P==p2),
+	X=Y,
+	not(P==p1),
+	not(X=Z).
+%   fill here
+fact11(Ls) :- 
+    member(p(p3,_,_,X,_), Ls),
+	member(p(P,_,Z,Y,_), Ls),
+	not(P==p3),
+	X=Y,
+	Z=c.
+%   fill here
+
+% Problem:
+friends(Ls) :-
+    length(Ls, 4),						%There are 4 friends in our list Ls
+    member(p(p1,_,_,_,_), Ls), member(p(p2,_,_,_,_), Ls), member(p(p3,_,_,_,_), Ls), member(p(p4,_,_,_,_), Ls), %One of them is p1, one is p2, one is p3, one is p4
+    member(p(_,bike,_,_,_), Ls), member(p(_,car,_,_,_), Ls), member(p(_,lorry,_, _,_), Ls), member(p(_,bus,_, _,_), Ls), %One of them drives a motorbike, one of them a car, one of them a lorry, one of them a bus
+    member(p(_,_,a,_,_), Ls), member(p(_,_,b, _,_), Ls), member(p(_,_,c, _,_), Ls), member(p(_,_,d, _,_), Ls), %One of them has license A, one of them B, one of them C, and one of them D
+    member(p(_,_,_, house,_), Ls), member(p(_,_,_, apartment,_), Ls), %Some live in a house and some live in an apartment
+    member(p(_,_,_, _,beach), Ls), member(p(_,_,_, _,country), Ls), member(p(_,_,_, _,mountains), Ls), %Some go to vacation to beach, some to country, some to mountains
+    fact1(Ls),
+    fact2(Ls),
+    fact3(Ls),
+    fact4(Ls),
+    fact5(Ls),
+    fact6(Ls),
+    fact7(Ls),
+    fact8(Ls),
+    fact9(Ls),
+    fact10(Ls),
+    fact11(Ls).
+ 
+
+%To see the results, run ?- friends(Ls).

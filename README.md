@@ -1,2 +1,2 @@
-# artificial-intelligence
-All labs from the course DD2380 Artificial Intelligence @ KTH
+# ai
+Solutions to labs - Course DD2380 Artificial Intelligence @ KTH
